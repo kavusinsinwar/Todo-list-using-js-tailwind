@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="output.css">
+    <title>Todo List</title>
+</head>
+<body class="bg-pink-300 h-screen w-screen">
+    <!-- Whole container -->
+    <div class="bg-green-200 h-full w-full justify-center items-center flex" id="fullcont">
+        <!-- Inner box -->
+        <div class="bg-gradient-to-r from-green-300 via-pink-500 to-red-300 p-3 h-[450px] w-[750px] justify-top items-center flex flex-col">
+            <p class="font-extrabold mb-[-20px]">I will Help You to Remember Your Work!</p>
+            <img class="rounded-md ml-[-640px] h-[70px] mt-0" src="images.png" alt="">
+            <div class="bg-slate-200 h-[90px] w-[550px] rounded-lg opacity mt-3 flex items-center">
+                <input id="taskInput" type="text" class="w-[550px] rounded-lg border-none h-[90px] px-4" placeholder="Enter a new task">
+            </div>
+            <div id="taskList" class="bg-slate-200 rounded-t-lg mt-2 w-[550px] h-[300px] overflow-y-auto"></div>
+        </div>
+    </div>
+
+    <script>
+        // Select input and task list elements
+        const taskInput = document.getElementById('taskInput');
+        const taskList = document.getElementById('taskList');
+
+        // Function to add a task
+        taskInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') { // Add task on Enter key
+                addTask();
+            }
+        });
+
+        function addTask() {
+            const taskText = taskInput.value.trim();
+            if (taskText === '') {
+                alert('Please enter a task!');
+                return;
+            }
+
+            // Create a new task item
+            const taskItem = document.createElement('div');
+            taskItem.className = 'flex justify-between items-center bg-white p-2 rounded-md mt-2 shadow-sm';
+
+            // Add task text
+            const taskContent = document.createElement('span');
+            taskContent.textContent = taskText;
+            taskContent.className = 'text-gray-800 font-medium';
+
+            // Add delete button
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.className = 'text-red-500 font-semibold px-3 py-1 rounded-md';
+            deleteButton.addEventListener('click', () => {
+                taskList.removeChild(taskItem);
+            });
+
+            // Append task content and delete button to task item
+            taskItem.appendChild(taskContent);
+            taskItem.appendChild(deleteButton);
+
+            // Append task item to the task list
+            taskList.appendChild(taskItem);
+
+            // Clear the input field
+            taskInput.value = '';
+        }
+    </script>
+</body>
+</html>
